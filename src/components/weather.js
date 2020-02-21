@@ -4,13 +4,15 @@ import Forecast from "./forecast"
 
 export default class Weather extends Component {
   state = {
-    currentWeather: {},
     city: "dublin,ie",
+    currentWeather: {},
     currentWeatherLoaded: false,
+    forecast: {},
     forecastLoaded: false,
   }
   componentDidMount() {
     this.getCurrentWeather()
+    this.getForecast()
   }
   getCurrentWeather() {
     fetch(
@@ -26,16 +28,37 @@ export default class Weather extends Component {
         })
       })
       .catch(err => {
-        alert(err)
+        console.log(err)
+      })
+  }
+  getForecast() {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?q=${this.state.city}&appid=${process.env.GATSBY_OPENWEATHERMAP_API_KEY}&units=metric`
+    )
+      .then(res => {
+        return res.json()
+      })
+      .then(data => {
+        this.setState({
+          forecast: data,
+          forecastLoaded: true,
+        })
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
   render() {
-    const { currentWeather, currentWeatherLoaded } = this.state
+    const {
+      currentWeather,
+      currentWeatherLoaded,
+      forecast,
+      forecastLoaded,
+    } = this.state
     return (
       <div>
-        {currentWeatherLoaded && (
-          <CurrentWeather weather={currentWeather} />
-        )}
+        {currentWeatherLoaded && <CurrentWeather weather={currentWeather} />}
+        {forecastLoaded && <Forecast weather={forecast} />}
       </div>
     )
   }
