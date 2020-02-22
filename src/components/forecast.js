@@ -22,6 +22,10 @@ export default function Forecast({ weather }) {
         {weather.list.map(hour => (
           <ForecastItem key={hour.dt}>
             <h3>{hour.dt_txt}</h3>
+            <img
+              src={`http://openweathermap.org/img/w/${hour.weather[0].icon}.png`}
+              alt={hour.weather[0].description}
+            />
             <h3>{`${Math.round(hour.main.temp)}°C`}</h3>
             <p>{`${hour.weather[0].description} ${Math.round(
               hour.main.temp_max
