@@ -1,7 +1,14 @@
 import React, { Component } from "react"
+import styled from "styled-components"
 import CitySearch from "./citySearch"
 import CurrentWeather from "./currentWeather"
 import Forecast from "./forecast"
+
+const WeatherHeader = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+`
 
 export default class Weather extends Component {
   state = {
@@ -69,8 +76,15 @@ export default class Weather extends Component {
     } = this.state
     return (
       <div>
-        <CitySearch setLocation={this.setLocation} />
-        {currentWeatherLoaded && <CurrentWeather weather={currentWeather} />}
+        <WeatherHeader>
+          <CitySearch setLocation={this.setLocation} />
+          <div>
+            <h3>Current Weather</h3>
+            {currentWeatherLoaded && (
+              <CurrentWeather weather={currentWeather} />
+            )}
+          </div>
+        </WeatherHeader>
         {forecastLoaded && <Forecast weather={forecast} />}
       </div>
     )
