@@ -36,7 +36,7 @@ export default function Forecast({ weather }) {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
-                  class="icon-location-pin"
+                  className="icon-location-pin"
                   style={{
                     width: "2rem",
                     transform: `rotate(${hour.wind.deg}deg)`,
@@ -44,7 +44,7 @@ export default function Forecast({ weather }) {
                 >
                   <g>
                     <path
-                      class="secondary"
+                      className="secondary"
                       fill="#A0AEC0"
                       d="M12 1v6a3 3 0 0 0 0 6v9.31a1 1 0 0 1-.7-.29l-5.66-5.66A9 9 0 0 1 12 1z"
                     />

@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import CitySearch from "./citySearch"
 import CurrentWeather from "./currentWeather"
 import Forecast from "./forecast"
 
@@ -9,6 +10,17 @@ export default class Weather extends Component {
     currentWeatherLoaded: false,
     forecast: {},
     forecastLoaded: false,
+  }
+  setLocation = newCity => {
+    this.setState(
+      {
+        city: newCity,
+      },
+      () => {
+        this.getCurrentWeather()
+        this.getForecast()
+      }
+    )
   }
   componentDidMount() {
     this.getCurrentWeather()
@@ -57,6 +69,7 @@ export default class Weather extends Component {
     } = this.state
     return (
       <div>
+        <CitySearch setLocation={this.setLocation} />
         {currentWeatherLoaded && <CurrentWeather weather={currentWeather} />}
         {forecastLoaded && <Forecast weather={forecast} />}
       </div>
