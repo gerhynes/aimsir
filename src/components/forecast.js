@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import { format, fromUnixTime } from "date-fns"
 
 const ForecastList = styled.ul`
   display: flex;
@@ -8,10 +9,12 @@ const ForecastList = styled.ul`
 `
 
 const ForecastItem = styled.li`
+  flex: 1 1 250px;
   list-style: none;
   margin: 1rem;
   padding: 1rem;
-  background: #edf2f7;
+  background: #2c5282;
+  color: #fff;
   border-radius: 0.25rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -32,9 +35,10 @@ export default function Forecast({ weather }) {
       <ForecastList>
         {weather.list.map(hour => (
           <ForecastItem key={hour.dt}>
-            <h3>{hour.dt_txt}</h3>
+            <h3>{format(fromUnixTime(hour.dt), "EEEE")}</h3>
+            <h3>{format(fromUnixTime(hour.dt), "h b")}</h3>
             <img
-              src={`http://openweathermap.org/img/w/${hour.weather[0].icon}.png`}
+              src={`http://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png`}
               alt={hour.weather[0].description}
             />
             <h3>{`${Math.round(hour.main.temp)}°C`}</h3>
