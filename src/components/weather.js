@@ -30,8 +30,48 @@ export default class Weather extends Component {
     )
   }
   componentDidMount() {
-    this.getCurrentWeather()
-    this.getForecast()
+    // this.getCurrentWeather()
+    // this.getForecast()
+    navigator.geolocation.getCurrentPosition(position => {
+      const lat = position.coords.latitude
+      const lon = position.coords.longitude
+      this.getWeatherByLocation(lat, lon)
+      this.getForecastByLocation(lat, lon)
+    })
+  }
+  getWeatherByLocation(lat, lon) {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.GATSBY_OPENWEATHERMAP_API_KEY}&units=metric`
+    )
+      .then(res => {
+        return res.json()
+      })
+      .then(data => {
+        this.setState({
+          currentWeather: data,
+          currentWeatherLoaded: true,
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+  getForecastByLocation(lat, lon) {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${process.env.GATSBY_OPENWEATHERMAP_API_KEY}&units=metric`
+    )
+      .then(res => {
+        return res.json()
+      })
+      .then(data => {
+        this.setState({
+          forecast: data,
+          forecastLoaded: true,
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
   getCurrentWeather() {
     fetch(
