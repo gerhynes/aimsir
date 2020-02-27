@@ -1,9 +1,10 @@
 import React from "react"
 import styled from "styled-components"
 import { format, fromUnixTime } from "date-fns"
+import WeatherIcon from "./weatherIcon"
 
 const WeatherTile = styled.div`
-  background: #bee3f8;
+  background: #2c5282;
   width: 250px;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -24,11 +25,14 @@ export default function CurrentWeather({ weather }) {
   return (
     <WeatherTile>
       <h3>{`${weather.name} ${format(fromUnixTime(weather.dt), "ha")}`}</h3>
-
-      <img
+      <WeatherIcon
+        iconCode={weather.weather[0].icon}
+        weatherDesc={weather.weather[0].main}
+      />
+      {/* <img
         src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
         alt={weather.weather[0].main}
-      />
+      /> */}
       <h3>{`${Math.round(weather.main.temp)}°C`}</h3>
       <p>{`${weather.weather[0].description} ${Math.round(
         weather.main.temp_max

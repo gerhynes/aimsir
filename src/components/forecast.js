@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { format, fromUnixTime } from "date-fns"
+import WeatherIcon from "./weatherIcon"
 
 const ForecastList = styled.ul`
   display: flex;
@@ -37,10 +38,14 @@ export default function Forecast({ weather }) {
           <ForecastItem key={hour.dt}>
             <h3>{format(fromUnixTime(hour.dt), "EEEE")}</h3>
             <h3>{format(fromUnixTime(hour.dt), "h b")}</h3>
-            <img
+            <WeatherIcon
+              iconCode={hour.weather[0].icon}
+              weatherDesc={hour.weather[0].description}
+            />
+            {/* <img
               src={`http://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png`}
               alt={hour.weather[0].description}
-            />
+            /> */}
             <h3>{`${Math.round(hour.main.temp)}°C`}</h3>
             <p>{`${hour.weather[0].description} ${Math.round(
               hour.main.temp_max
